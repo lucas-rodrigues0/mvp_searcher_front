@@ -154,6 +154,33 @@
                 <p>Esse é um projeto acadêmico com intuito de difundir o conhecimento, e não tem amparo legal para casos
                     específicos.</p>
             </div>
+            <div id="comments" class="container mb-5">
+                <div class="d-flex justify-content-between mb-3">
+                    <h1>Comentários</h1>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                        data-bs-target="#commentModal">Enviar Comentário</button>
+                </div>
+                <div id="comments-list"></div>
+            </div>
+            <!-- Modal Comments -->
+            <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Comentários</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body d-flex justify-content-center">
+                            <textarea name="addComment" id="addCommentArea" cols="45" rows="5" maxlength="350"
+                                placeholder="Escreva um comentário"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="addComment()">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
