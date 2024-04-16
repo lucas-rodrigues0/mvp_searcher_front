@@ -228,3 +228,89 @@ function turnOn(elemId){
     elem.style.display = "block"
     readerOn = true
 }
+
+async function requestComments(){
+    const url = "http://127.0.0.1:5000/comments";
+
+    const response = await handleRequest(url, "GET").then((result) => result);
+    const responseJson = await response.json()
+    const responseStatus = response.status
+    const responseData = responseJson["data"];
+
+    if(responseStatus == 200){
+        createCommentsElements(responseData["comments"]);
+    } else {
+        const msg = responseData["message"]
+        alert(`Não foi possivel inserir comentário. 
+        O status da resposta: ${responseStatus}. 
+        Menssagem: ${msg}`);
+    }
+
+}
+
+function createCommentsElements(commentsData){
+    const commentsList = document.getElementById("comments-list");
+    commentsList.replaceChildren();
+    commentsData.forEach((comment) => {
+        const username = comment["username"];
+        const content = comment["content"];
+        const createdAt = comment["created_at"];
+
+        const divCard = document.createElement("div");
+        divCard.className = "card";
+        const divBody = document.createElement("div");
+        divBody.className = "card-body";
+        const cardTitle = document.createElement("h5");
+        const cardText = document.createElement("p");
+        const cardFooter = document.createElement("span");
+
+        cardTitle.innerText = username;
+        cardTitle.className = "card-title";
+        cardText.innerText = content;
+        cardText.className = "card-text border border-secondary-subtle p-3";
+        
+        divBody.appendChild(cardTitle);
+        divBody.appendChild(cardText);
+        
+        cardFooter.innerText = createdAt;
+        cardFooter.className = "mb-2 px-3 text-end fw-lighter";
+
+        divCard.appendChild(divBody);
+        divCard.appendChild(cardFooter);
+
+        commentsList.appendChild(divCard)
+    })
+}
+
+async function addComment(){    
+    const commentInput = document.getElementById("addCommentArea");
+    const commentModal = document.getElementById("commentModal");
+    const modal = bootstrap.Modal.getInstance(commentModal);
+    
+    const tokenData = getTokenFromSession()
+
+    if (tokenData){
+        const data = {
+            "content": commentInput.value
+        }
+    
+        const url = "http://127.0.0.1:5000/comments";
+        const token = tokenData.token;
+        
+        const response = await handleRequest(url, "POST", data, token).then((result) => result);
+        const responseJson = await response.json()
+        const responseStatus = response.status
+        const responseData = responseJson["data"];
+
+        if(responseStatus != 200){
+            const msg = responseData["message"]
+            alert(`Erro ao buscar os comentários.
+            O status da resposta: ${responseStatus}. 
+            Menssagem: ${msg}`);
+        }
+        commentInput.value = "";
+    }
+    
+    requestComments();
+    modal.hide();
+}
