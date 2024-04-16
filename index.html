@@ -103,7 +103,34 @@
         </div>
     </header>
     <main>
+        <section class="main-section">
 
+            <div class="container mb-5" id="searcher">
+                <div class="d-flex justify-content-center mb-3">
+                    <h1>Constituição Federal de 1988</h1>
+                </div>
+                <div class="mb-4">
+                    <form id="searcherForm" class="d-flex" role="search">
+                        <input id="queryInput" class="form-control form-control-lg me-2" type="search"
+                            placeholder="Pesquisar sobre..." aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+                    </form>
+                </div>
+                <div class="results container my-3">
+                    <div>
+                        <h3>Resultados</h3>
+                        <div>
+                            <ul id="result-list" class="list-group">
+                                <!-- List itens created by the script -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
