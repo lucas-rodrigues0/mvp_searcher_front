@@ -176,7 +176,7 @@ searcher.addEventListener("submit", async (e) => {
     const query = document.getElementById("queryInput");
     const tokenInfo = getTokenFromSession();
     if(!tokenInfo){
-        alert("Por favor, fazer o login para enviar o seu comentário.");
+        alert("Por favor, fazer o login para enviar a sua busca.");
         return;
     }
 
@@ -293,7 +293,11 @@ async function addComment(){
     
     const tokenData = getTokenFromSession()
 
-    if (tokenData){
+    if (!tokenData){
+        alert("Por favor, fazer o login para enviar o seu comentário.");
+        modal.hide();
+        return;
+    } else{
         const data = {
             "content": commentInput.value
         }
