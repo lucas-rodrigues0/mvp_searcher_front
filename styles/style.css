@@ -1,7 +1,20 @@
+body{
+    height: 100%;
+    color: #0b0909;
+    background-image: url("../resources/bg_image.jpg");
+    background-size: cover;
+}
 
+.main-section{
+    background-color: #f5f4f4;
+    max-width: 75%;
+    height: 100%;
+    display: block;
+    padding: 40px 0;
+    margin: auto;
+}
 
-
-/* NAV styles */
+/* Nav styles */
 .login-modal{
     display: flex;
     align-items: center;
@@ -147,7 +160,7 @@ input::placeholder{
     transform: scale(1.01);
 }
 
-
+/* Results styles */
 .results{
     display: none;
 }
@@ -163,6 +176,7 @@ input::placeholder{
     font-style: italic;
 }
 
+/* Reader styles */
 #iframe-reader{
     position: relative;
     width: 100%;

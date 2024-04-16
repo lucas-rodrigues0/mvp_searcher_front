@@ -1,3 +1,6 @@
+window.addEventListener("load", (event) => {
+    requestComments();
+})
 
 async function handleRequest(url, method, data, token){
     let formattedUrl = url
@@ -174,6 +177,7 @@ searcher.addEventListener("submit", async (e) => {
     const tokenInfo = getTokenFromSession();
     if(!tokenInfo){
         alert("Por favor, fazer o login para enviar o seu comentário.");
+        return;
     }
 
     const baseUrl = "http://127.0.0.1:5000/searcher?";
