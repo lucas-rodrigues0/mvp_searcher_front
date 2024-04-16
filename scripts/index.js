@@ -127,7 +127,15 @@ loginForm.addEventListener("submit", async (e) => {
     modal.hide();
 });
 
-function movePage(page){}
+function movePage(page){
+    const url_base = "resources/CF.pdf#page="
+    const reader_elem = document.getElementById("iframe-reader");
+    reader_elem.src = url_base.concat(page.toString())
+
+    if (reader_elem.style.display == "" | reader_elem.style.display == "none"){
+        handleReader("#iframe-reader")
+    }
+}
 
 function handleQueryResults(results){
     const resultsContainer = document.querySelector(".results");
@@ -197,3 +205,26 @@ searcher.addEventListener("submit", async (e) => {
         handleQueryResults(results)
     }
 });
+
+
+let readerOn = false
+
+function handleReader(elemId){
+    if (readerOn) {
+        turnOff(elemId)
+    } else {
+        turnOn(elemId)
+    }
+}
+
+function turnOff(elemId){
+    const elem = document.querySelector(elemId);
+    elem.style.display = "none"
+    readerOn = false
+}
+
+function turnOn(elemId){
+    const elem = document.querySelector(elemId);
+    elem.style.display = "block"
+    readerOn = true
+}
