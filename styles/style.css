@@ -151,3 +151,9 @@ input::placeholder{
 .results{
     display: none;
 }
+
+.noresult-span{
+    font-weight: 500;
+    font-size: large;
+    font-style: italic;
+}

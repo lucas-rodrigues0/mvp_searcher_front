@@ -28,6 +28,16 @@ function setTokenToSession(token, account_id){
     sessionStorage.setItem("account_id", account_id)
 }
 
+function getTokenFromSession(){
+    const token = sessionStorage.getItem("token");
+    const accountId = sessionStorage.getItem("account_id");
+    if (accountId){
+        return {"token": token, "account_id": accountId};
+    } else {
+        return false;
+    }
+}
+
 
 const signin = document.querySelector(".sign-in");
 const register = document.querySelector(".register");
@@ -117,3 +127,73 @@ loginForm.addEventListener("submit", async (e) => {
     modal.hide();
 });
 
+function movePage(page){}
+
+function handleQueryResults(results){
+    const resultsContainer = document.querySelector(".results");
+    const resultList = document.getElementById("result-list");
+    resultList.replaceChildren();
+    if(!results) {
+        const span = document.createElement("span")
+        span.textContent = "Nenhum resultado encontrado"
+        span.className = "noresult-span"
+        resultList.appendChild(span)
+    } else {
+        for(key in results){
+            const li = document.createElement("li");
+            const pageLink = document.createElement("span")
+            pageLink.innerHTML = `<a class="btn-page" href="#iframe-reader" onclick="movePage(${key})">Página ${key}:</a>`
+            li.appendChild(pageLink)
+            const highlight = document.createElement("p")
+            highlight.innerHTML = results[key]
+            highlight.insertAdjacentText("afterbegin", "(...) ")
+            highlight.insertAdjacentText("beforeend", " (...)")
+            li.appendChild(highlight)
+            li.className = "list-group-item"
+            resultList.appendChild(li)
+        }
+    }
+    resultsContainer.style.display = "block";
+}
+
+
+const searcher = document.getElementById("searcherForm");
+
+searcher.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const query = document.getElementById("queryInput");
+    const tokenInfo = getTokenFromSession();
+    if(!tokenInfo){
+        alert("Por favor, fazer o login para enviar o seu comentário.");
+    }
+
+    const baseUrl = "http://127.0.0.1:5000/searcher?";
+
+    if (query.value != ""){
+        const data = {"query": query.value}
+        const token = tokenInfo["token"]
+        
+        const response = await handleRequest(baseUrl, "GET", data, token).then((result) => result);
+        const responseJson = await response.json()
+        const responseStatus = response.status
+        let results = undefined
+        const responseData = responseJson["data"];
+
+        if(responseStatus == 200){
+            results = responseData["results"];
+            if(responseData["total_count"] == 0){
+                results = false
+            } 
+        } else {
+            const msg = responseData["message"]
+            results = false
+            alert(`Não foi possivel realizar a busca. 
+            O status da resposta: ${responseStatus}. 
+            Menssagem: ${msg}`);
+        }
+
+        query.value = "";
+        handleQueryResults(results)
+    }
+});
