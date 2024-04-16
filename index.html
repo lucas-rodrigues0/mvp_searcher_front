@@ -127,7 +127,17 @@
                     </div>
                 </div>
                 <div>
-
+                    <div class="container-fluid d-flex flex-column justify-content-center mb-5">
+                        <div id="reader-container" class="container">
+                            <div id="reader-btn" class="d-flex flex-column align-items-center mb-3">
+                                <span class="text-center">Clique para abrir o leitor</span>
+                                <button type="button" onclick="handleReader('#iframe-reader');"></button>
+                            </div>
+                            <div id="reader" class="d-flex justify-content-center">
+                                <iframe id="iframe-reader" src="resources/CF.pdf"></iframe>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
