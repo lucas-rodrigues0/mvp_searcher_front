@@ -120,14 +120,13 @@ loginForm.addEventListener("submit", async (e) => {
         if(token){
             setTokenToSession(token, accountId)
         }
+        modal.hide();
     } else {
         const msg = responseData["message"]
         alert(`Não foi possivel realizar o login. 
         O status da resposta: ${responseStatus}. 
         Menssagem: ${msg}`);
     }
-
-    modal.hide();
 });
 
 function movePage(page){
